@@ -1,0 +1,7 @@
+{
+  BasedOnStyle: Mozilla,
+  ColumnLimit: "95",
+  IndentWidth: "4",
+  BreakBeforeBraces: Allman,
+  FixNamespaceComments: "true",
+}
