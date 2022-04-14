@@ -7,3 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 enable_testing()
 
+add_compile_options(-Wall -Wextra -Werror -Wpedantic)
+
+add_subdirectory(src)
+
