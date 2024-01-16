@@ -1,21 +1,24 @@
-from typing import Dict, List
+from typing import List
 
 
 # Complexity simple:
 #   * Runtime: O(n) count occurrences of all values + O(m) find max
 #   * Space: O(m) m, number of distinct values
-# Complexity best conceivable:
+# Complexity best conceivable: (Boyer Moore Voting)
 #   * Runtime: O(n) look at every element only once
-#   * Space: O(1)
+#   * Space: O(1) only two variables
 
 
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
-        values: Dict[int,int] = {}
-        for element in nums:
-            if element in values:
-                values[element] += 1
+        majority = 0
+        frequency = 0
+        for num in nums:
+            if frequency == 0:
+                majority = num
+            if num == majority:
+                frequency += 1
             else:
-                values[element] = 1
-        return max(values, key=values.get)
+                frequency -= 1
 
+        return majority
