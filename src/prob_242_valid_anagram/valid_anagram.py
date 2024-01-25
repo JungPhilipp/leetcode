@@ -5,10 +5,13 @@
 #   * Runtime: O(n)
 #   * Space: O(1)
 
-
-from collections import Counter
-
-
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        return Counter(s) == Counter(t)
+        counter = [0] * 256
+        for letter in s:
+             counter[ord(letter)] +=1
+
+        for letter in t:
+            counter[ord(letter)] -=1
+
+        return all(count == 0 for count in counter)
