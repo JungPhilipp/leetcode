@@ -10,17 +10,22 @@ from typing import List
 
 class Solution:
     def searchInsert(self, nums: List[int], target: int) -> int:
-        if (len(nums)) == 0:
-            return 0
-        if len(nums) == 1:
-            return int(target > nums[0])
+        interval = nums
+        interval_start = 0
+        while True:
+            print(interval_start, interval)
+            if len(interval) == 0:
+                return interval_start
+            if len(interval) == 1:
+                return interval_start + int(target > interval[0])
 
-        pivot_index = len(nums) // 2
-        pivot = nums[pivot_index]
+            pivot_index = len(interval) // 2
+            pivot = interval[pivot_index]
 
-        if target == pivot:
-            return pivot_index
-        if target < pivot:
-            return self.searchInsert(nums[:pivot_index], target)
-        else:
-            return pivot_index + self.searchInsert(nums[pivot_index:], target)
+            if target == pivot:
+                return interval_start + pivot_index
+            if target < pivot:
+                interval = interval[:pivot_index]
+            else:
+                interval_start += pivot_index
+                interval = interval[pivot_index:]
