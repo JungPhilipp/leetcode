@@ -20,17 +20,15 @@ class Solution:
             next += 1
         return next - 1
 
-    def interval(self, start: int, end: int, nums: List[int]) -> str:
-        if start == end:
-            return str(nums[start])
-        return f"{nums[start]}->{nums[end]}"
-
     def summaryRanges(self, nums: List[int]) -> List[str]:
         intervals = []
         start = 0
         while start < len(nums):
             end = self.findEnd(start, nums)
-            intervals.append(self.interval(start, end, nums))
+            intervals.append([nums[start], nums[end]])
             start = end + 1
 
-        return intervals
+        return [
+            f"{start}->{end}" if start != end else str(start)
+            for start, end in intervals
+        ]
