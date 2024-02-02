@@ -1,4 +1,4 @@
-use std::vec::Vec;
+use std::{collections::HashMap, vec::Vec};
 struct Solution {}
 
 /// * Time Complexity: O(n2)
@@ -15,10 +15,23 @@ fn two_sum_simple(nums: Vec<i32>, target: i32) -> Vec<i32> {
     vec![]
 }
 
+/// * Time Complexity: O(n)
+/// * Space Complexity: O(n)
+fn two_sum_hash(nums: Vec<i32>, target: i32) -> Vec<i32> {
+    let mut counter_parts = HashMap::<i32, usize>::new();
+    for (i, num) in nums.iter().enumerate() {
+        if let Some(other_index) = counter_parts.get(num) {
+            return vec![*other_index as i32, i as i32];
+        }
+        counter_parts.insert(target - num, i);
+    }
+
+    vec![]
+}
 
 impl Solution {
     pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
-        two_sum_simple(nums, target)
+        two_sum_hash(nums, target)
     }
 }
 
