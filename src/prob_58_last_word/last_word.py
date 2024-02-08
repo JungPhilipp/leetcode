@@ -1,5 +1,3 @@
-from curses.ascii import isspace
-
 # Complexity simple:
 #   * Runtime: O(n)
 #   * Space: O(1)
