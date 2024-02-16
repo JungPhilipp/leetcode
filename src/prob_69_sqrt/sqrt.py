@@ -5,26 +5,21 @@
 
 class Solution:
     def mySqrt(self, x: int) -> int:
-        def f(x):
-            return x * x
+        if x == 0 or x == 1:
+             return x
+        def f(s):
+            return s * s - x
 
-        start = 0
-        end = x // 2
+        xn = x // 2
+        f_last = x
 
-        steps = 0
         while True:
-            fx = f(start)
-            fx1 = f(start + 1)
-            if fx <= x and fx1 > x:
-                return start
+            f_xn = f(xn)
+            if f_last >= 0 and f_xn <= 0:
+                return xn
 
-            mid = start + max((end - start) // 2, 1)
-            f_mid = f(mid)
-            if f_mid == x:
-                return mid
-            if f(mid) < x:
-                start = mid
-            else:
-                end = mid
+            f_xn1 = f(xn + 1)
+            f_deriv = f_xn1 - f_xn
 
-            steps += 1
+            xn -= max(f_xn // f_deriv, 1)
+            f_last = f_xn
