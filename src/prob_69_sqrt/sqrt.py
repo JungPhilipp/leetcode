@@ -1,17 +1,30 @@
 # Complexity simple:
-#   * Runtime: O(n):
-#   * Space: O(n): return
+#   * Runtime: O(log n):
+#   * Space: O(1):
 
 
 class Solution:
     def mySqrt(self, x: int) -> int:
-        s = x // 2
+        def f(x):
+            return x * x
+
+        start = 0
+        end = x // 2
+
+        steps = 0
         while True:
-            s2 = s * s
-            sp1 = (s + 1) * (s + 1)
-            if s2 <= x and sp1 > x:
-                return s
-            if s2 < x:
-                s = (s + 1) * 2
+            fx = f(start)
+            fx1 = f(start + 1)
+            if fx <= x and fx1 > x:
+                return start
+
+            mid = start + max((end - start) // 2, 1)
+            f_mid = f(mid)
+            if f_mid == x:
+                return mid
+            if f(mid) < x:
+                start = mid
             else:
-                s = s // 2
+                end = mid
+
+            steps += 1
