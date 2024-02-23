@@ -1,8 +1,8 @@
 # Complexity simple:
 #   * Runtime: O(log n):
-#   * Space: O(log n): Stack space for recursion and sum for each level, both log n
+#   * Space: O(log n): space for avg
 
-from collections import defaultdict
+from collections import defaultdict, deque
 from typing import Optional, List, Tuple, Dict
 
 
@@ -16,14 +16,22 @@ class TreeNode:
 
 class Solution:
     def averageOfLevels(self, root: Optional[TreeNode]) -> List[float]:
-        levels: Dict[int, Tuple[int, int]] = defaultdict(lambda: (0,0))
-        stack = [(root, 0)]
-        while len(stack) > 0:
-            (node, level) = stack.pop(0)
-            if not node:
-                continue
-            sum, counter = levels[level]
-            levels[level] = (sum + node.val, counter + 1)
-            stack.extend([(node.left, level + 1), (node.right, level + 1)])
+        if not root:
+            return []
 
-        return [sum / counter for (sum, counter) in levels.values()]
+        avgs = []
+        queue = deque()
+        queue.append(root)
+        while queue:
+            sum = 0.
+            count = len(queue)
+            for _ in range(count):
+                node = queue.popleft()
+                sum += node.val
+                if node.right:
+                    queue.append(node.right)
+                if node.left:
+                    queue.append(node.left)
+            avgs.append(sum / count)
+        return avgs
+
