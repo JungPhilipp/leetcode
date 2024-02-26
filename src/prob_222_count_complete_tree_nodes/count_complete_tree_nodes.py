@@ -27,4 +27,30 @@ class SolutionSimple:
         return count
 
 
-Solution = SolutionSimple
+#   * Runtime: O(log n * log n): binary search (log n) * traverse to lowest level (log n)
+#   * Space: O(log n): stack space for recursion
+
+
+class SolutionLinear:
+    def countNodes(self, root: Optional[TreeNode]) -> int:
+        depthLeft = self.depthLeft(root)
+        depthRight = self.depthRight(root)
+        maxCount = pow(2, depthLeft) - 1
+
+        if depthLeft == depthRight:
+            return maxCount
+
+        return 1 + self.countNodes(root.left) + self.countNodes(root.right)
+
+    def depthLeft(self, node: Optional[TreeNode]) -> int:
+        if not node:
+            return 0
+        return 1 + self.depthLeft(node.left)
+
+    def depthRight(self, node: Optional[TreeNode]) -> int:
+        if not node:
+            return 0
+        return 1 + self.depthRight(node.right)
+
+
+Solution = SolutionLinear
